@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sunset Point - Presentasi IT 2026</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+        
+        :root {
+            --sunset-primary: #ff7e5f;
+            --sunset-secondary: #feb47b;
+            --sunset-accent: #864ba2;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #fdf8f6;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(255, 126, 95, 0.05) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(134, 75, 162, 0.05) 0px, transparent 50%);
+            min-height: 100vh;
+        }
+
+        .sunset-glass {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .sunset-gradient {
+            background: linear-gradient(135deg, #ff7e5f 0%, #feb47b 50%, #864ba2 100%);
+            background-size: 200% 200%;
+            animation: gradientMove 10s ease infinite;
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .card-shadow {
+            box-shadow: 0 10px 25px -5px rgba(255, 126, 95, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+        }
+
+        .btn-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .btn-hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(255, 126, 95, 0.4);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { 
+            background: #feb47b; 
+            border-radius: 10px;
+        }
+
+        .input-focus:focus {
+            border-color: var(--sunset-primary);
+            box-shadow: 0 0 0 4px rgba(255, 126, 95, 0.15);
+        }
+    </style>
+</head>
+<body class="text-gray-800 pb-12">
+
+    <!-- Navigation -->
+    <nav class="sunset-gradient text-white shadow-xl sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <div class="bg-white/20 p-2 rounded-lg backdrop-blur-md">
+                    <img src="spa1.png" class="h-10 w-auto">
+                </div>
+                <div>
+                    <span class="text-xl font-extrabold tracking-tight block leading-none">SUNSET POINT</span>
+                    <span class="text-[10px] uppercase tracking-[0.2em] font-medium opacity-80">IT Department</span>
+                </div>
+            </div>
+            <div class="flex items-center space-x-4 bg-black/10 px-4 py-2 rounded-full backdrop-blur-sm border border-white/10">
+                <i class="fas fa-user-shield text-xs opacity-70"></i>
+                <span class="text-xs font-bold tracking-wide uppercase">I Kadek Budiastika</span>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-6 py-10">
+        
+        <!-- Header -->
+        <header class="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
+            <div class="space-y-1">
+                <h1 class="text-4xl font-extrabold text-gray-900 tracking-tight">Sistem <span class="text-transparent bg-clip-text sunset-gradient">Pelaporan IT</span></h1>
+                <p class="text-gray-500 font-medium italic">Tahun Operasional 2026</p>
+            </div>
+            <div class="sunset-glass px-6 py-3 rounded-2xl card-shadow border-orange-100 flex items-center space-x-4">
+                <div class="bg-orange-100 p-2 rounded-xl text-orange-600">
+                    <i class="far fa-calendar-alt"></i>
+                </div>
+                <div>
+                    <p class="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Status Per Tanggal</p>
+                    <span id="currentFullDate" class="text-sm font-bold text-gray-700"></span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Stats Overview Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+            <!-- Total -->
+            <div class="bg-white p-1 rounded-3xl card-shadow group">
+                <div class="p-6 rounded-[calc(1.5rem-1px)] border border-orange-50 bg-gradient-to-br from-white to-orange-50/30 group-hover:to-orange-100/50 transition-colors">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="bg-orange-500/10 p-3 rounded-2xl">
+                            <i class="fas fa-folder-open text-orange-600 text-xl"></i>
+                        </div>
+                        <span class="text-[10px] font-bold text-orange-600 bg-orange-100 px-3 py-1 rounded-full uppercase">Akumulasi</span>
+                    </div>
+                    <h3 id="totalReports" class="text-5xl font-black text-gray-900 mb-1">0</h3>
+                    <p class="text-sm font-bold text-gray-500 uppercase tracking-tighter">Laporan Masuk 2026</p>
+                </div>
+            </div>
+            <!-- Pending -->
+            <div class="bg-white p-1 rounded-3xl card-shadow group">
+                <div class="p-6 rounded-[calc(1.5rem-1px)] border border-yellow-50 bg-gradient-to-br from-white to-yellow-50/30 group-hover:to-yellow-100/50 transition-colors">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="bg-yellow-500/10 p-3 rounded-2xl">
+                            <i class="fas fa-hourglass-half fa-spin text-yellow-600 text-xl"></i>
+                        </div>
+                        <span class="text-[10px] font-bold text-yellow-600 bg-yellow-100 px-3 py-1 rounded-full uppercase">On Progress</span>
+                    </div>
+                    <h3 id="pendingReports" class="text-5xl font-black text-gray-900 mb-1">0</h3>
+                    <p class="text-sm font-bold text-gray-500 uppercase tracking-tighter">Tahap Pengerjaan</p>
+                </div>
+            </div>
+            <!-- Resolved -->
+            <div class="bg-white p-1 rounded-3xl card-shadow group">
+                <div class="p-6 rounded-[calc(1.5rem-1px)] border border-green-50 bg-gradient-to-br from-white to-green-50/30 group-hover:to-green-100/50 transition-colors">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="bg-green-500/10 p-3 rounded-2xl">
+                            <i class="fas fa-check-circle text-green-600 text-xl"></i>
+                        </div>
+                        <span class="text-[10px] font-bold text-green-600 bg-green-100 px-3 py-1 rounded-full uppercase">Success</span>
+                    </div>
+                    <h3 id="resolvedReports" class="text-5xl font-black text-gray-900 mb-1">0</h3>
+                    <p class="text-sm font-bold text-gray-500 uppercase tracking-tighter">Selesai Ditangani</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+            
+            <!-- Form Section -->
+            <div class="lg:col-span-4">
+                <div class="bg-white p-8 rounded-[2rem] card-shadow border border-gray-100 sticky top-28">
+                    <div class="flex items-center space-x-3 mb-8">
+                        <div class="w-2 h-8 sunset-gradient rounded-full"></div>
+                        <h2 class="text-2xl font-extrabold text-gray-900">Input Data 2026</h2>
+                    </div>
+                    
+                    <form id="reportForm" class="space-y-5">
+                        <div class="space-y-1.5">
+                            <label class="text-xs font-bold text-gray-400 uppercase tracking-widest ml-1">Nama Pelapor</label>
+                            <input type="text" id="reporterName" required placeholder="Contoh: Budiarta"
+                                class="w-full px-5 py-3.5 bg-gray-50 border border-gray-200 rounded-2xl input-focus outline-none transition-all font-semibold">
+                        </div>
+                        <div class="space-y-1.5">
+                            <label class="text-xs font-bold text-gray-400 uppercase tracking-widest ml-1">Departemen</label>
+                            <select id="department" class="w-full px-5 py-3.5 bg-gray-50 border border-gray-200 rounded-2xl input-focus outline-none transition-all font-semibold appearance-none">
+                                <option value="Front Office">Front Office/Cashier</option>
+                                <option value="F&B Service">F&B Service</option>
+                                <option value="Housekeeping">Housekeeping</option>
+                                <option value="Accounting">Accounting</option>
+                                <option value="Engineering">Engineering</option>
+                                <option value="Kitchen">Kitchen</option>
+                                <option value="IT Department">IT</option>
+                            </select>
+                        </div>
+                        <div class="space-y-1.5">
+                            <label class="text-xs font-bold text-gray-400 uppercase tracking-widest ml-1">Deskripsi Masalah</label>
+                            <textarea id="issueDescription" required rows="4" placeholder="Jelaskan kendala teknis..."
+                                class="w-full px-5 py-3.5 bg-gray-50 border border-gray-200 rounded-2xl input-focus outline-none transition-all font-semibold resize-none"></textarea>
+                        </div>
+                        <div class="space-y-3 p-4 bg-orange-50/50 rounded-2xl border border-orange-100">
+                            <label class="text-xs font-black text-orange-800 uppercase tracking-widest block text-center">Urgency Level</label>
+                            <div class="flex justify-between gap-2">
+                                <label class="flex-1 cursor-pointer">
+                                    <input type="radio" name="priority" value="Biasa" checked class="hidden peer">
+                                    <div class="text-center py-2.5 rounded-xl border-2 border-transparent bg-white peer-checked:border-blue-500 peer-checked:text-blue-600 transition-all font-bold text-[10px] text-gray-400 shadow-sm uppercase">Low</div>
+                                </label>
+                                <label class="flex-1 cursor-pointer">
+                                    <input type="radio" name="priority" value="Penting" class="hidden peer">
+                                    <div class="text-center py-2.5 rounded-xl border-2 border-transparent bg-white peer-checked:border-orange-500 peer-checked:text-orange-600 transition-all font-bold text-[10px] text-gray-400 shadow-sm uppercase">High</div>
+                                </label>
+                                <label class="flex-1 cursor-pointer">
+                                    <input type="radio" name="priority" value="Darurat" class="hidden peer">
+                                    <div class="text-center py-2.5 rounded-xl border-2 border-transparent bg-white peer-checked:border-red-500 peer-checked:text-red-600 transition-all font-bold text-[10px] text-gray-400 shadow-sm uppercase">Urgent</div>
+                                </label>
+                            </div>
+                        </div>
+                        <button type="submit" 
+                            class="w-full sunset-gradient text-white font-extrabold py-4 rounded-2xl btn-hover shadow-lg uppercase tracking-widest text-sm flex items-center justify-center space-x-2">
+                            <i class="fas fa-save"></i>
+                            <span>Simpan Laporan</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- List Section (The requested Presentation change) -->
+            <div class="lg:col-span-8">
+                <div class="bg-white rounded-[2.5rem] card-shadow border border-gray-100 overflow-hidden">
+                    <div class="p-8 border-b border-gray-100 flex flex-col sm:flex-row justify-between items-center bg-white gap-6">
+                        <div class="flex items-center space-x-4">
+                            <div class="bg-purple-100 p-3 rounded-2xl">
+                                <i class="fas fa-chart-line text-purple-600"></i>
+                            </div>
+                            <div>
+                                <h2 class="text-2xl font-extrabold text-gray-900 leading-none">Presentasi Laporan IT</h2>
+                                <p class="text-[10px] text-gray-400 font-bold uppercase tracking-[0.15em] mt-1">Status Real-time 2026</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-3">
+                            <button onclick="copyTableData()" class="px-5 py-3 bg-blue-50 text-blue-600 rounded-2xl text-[10px] font-black hover:bg-blue-600 hover:text-white transition-all flex items-center shadow-sm border border-blue-100 uppercase tracking-widest">
+                                <i class="fas fa-file-export mr-2"></i> Export
+                            </button>
+                            <button onclick="clearAllData()" class="px-4 py-3 bg-red-50 text-red-400 rounded-2xl text-[10px] hover:bg-red-500 hover:text-white transition-all shadow-sm border border-red-100">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="bg-gray-50/80 text-gray-400 text-[10px] uppercase font-black tracking-[0.2em]">
+                                    <th class="px-8 py-6">Timestamp 2026</th>
+                                    <th class="px-8 py-6">Staf & Dept</th>
+                                    <th class="px-8 py-6">Status Penyelesaian</th>
+                                    <th class="px-8 py-6 text-center">Tindakan</th>
+                                </tr>
+                            </thead>
+                            <tbody id="reportList" class="divide-y divide-gray-50">
+                                <!-- Data Laporan -->
+                            </tbody>
+                        </table>
+                        <div id="emptyState" class="p-24 text-center">
+                            <div class="w-20 h-20 bg-gray-50 rounded-3xl flex items-center justify-center mx-auto mb-6 rotate-12">
+                                <i class="fas fa-inbox text-3xl text-gray-200"></i>
+                            </div>
+                            <p class="text-lg font-extrabold text-gray-800">Database Kosong</p>
+                            <p class="text-gray-400 text-sm font-medium mt-1">Belum ada data presentasi untuk tahun 2026.</p>
+                        </div>
+                    </div>
+                    <!-- Footer Presentation Info -->
+                    <div class="bg-gray-50 p-6 border-t border-gray-100 flex justify-between items-center text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+                        <span>Sunset Point Bali</span>
+                        <span class="flex items-center"><i class="fas fa-shield-alt mr-2 text-green-500"></i> Verified by IT Admin</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Toast -->
+    <div id="toast" class="fixed bottom-10 left-1/2 -translate-x-1/2 hidden bg-gray-900/95 backdrop-blur-xl text-white px-8 py-5 rounded-[2rem] shadow-2xl items-center space-x-5 z-50 transition-all duration-500 border border-white/10">
+        <div id="toastIcon" class="bg-sunset-primary p-2 rounded-xl">
+            <i class="fas fa-check text-xs"></i>
+        </div>
+        <span id="toastMsg" class="font-black text-[10px] tracking-widest uppercase"></span>
+    </div>
+
+    <script>
+        // Set Today's Date
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        document.getElementById('currentFullDate').innerText = new Date().toLocaleDateString('id-ID', options);
+
+        // State Management
+        let reports = JSON.parse(localStorage.getItem('sunset_reports_2026')) || [];
+
+        const reportForm = document.getElementById('reportForm');
+        const reportList = document.getElementById('reportList');
+        const emptyState = document.getElementById('emptyState');
+        const toast = document.getElementById('toast');
+
+        updateUI();
+
+        reportForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const newReport = {
+                id: Date.now(),
+                timestamp: new Date().toLocaleString('id-ID', { 
+                    day: '2-digit', 
+                    month: 'short', 
+                    year: 'numeric',
+                    hour: '2-digit', 
+                    minute: '2-digit'
+                }),
+                reporter: document.getElementById('reporterName').value,
+                dept: document.getElementById('department').value,
+                issue: document.getElementById('issueDescription').value,
+                priority: document.querySelector('input[name="priority"]:checked').value,
+                status: 'Open'
+            };
+
+            reports.unshift(newReport);
+            saveData();
+            reportForm.reset();
+            showToast("DATA PRESENTASI BERHASIL DITAMBAHKAN");
+        });
+
+        function saveData() {
+            localStorage.setItem('sunset_reports_2026', JSON.stringify(reports));
+            updateUI();
+        }
+
+        function updateUI() {
+            if (reports.length > 0) {
+                emptyState.classList.add('hidden');
+            } else {
+                emptyState.classList.remove('hidden');
+            }
+
+            reportList.innerHTML = reports.map(report => `
+                <tr class="hover:bg-orange-50/40 transition-all duration-300">
+                    <td class="px-8 py-7">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-1.5 h-1.5 rounded-full ${report.status === 'Resolved' ? 'bg-green-500' : 'bg-orange-500'}"></div>
+                            <div class="text-[11px] font-black text-gray-800 tracking-tight">${report.timestamp}</div>
+                        </div>
+                    </td>
+                    <td class="px-8 py-7">
+                        <div class="font-black text-gray-900 text-sm">${report.reporter}</div>
+                        <div class="text-[9px] text-gray-400 font-black uppercase tracking-widest mt-0.5">${report.dept}</div>
+                    </td>
+                    <td class="px-8 py-7">
+                        <div class="mb-3">
+                            <p class="text-gray-600 text-[13px] font-bold leading-snug mb-2">${report.issue}</p>
+                            <div class="inline-flex items-center space-x-2">
+                                <span class="px-2.5 py-1 rounded-lg text-[9px] font-black uppercase tracking-wider ${getPriorityClass(report.priority)}">
+                                    ${report.priority}
+                                </span >
+                                <span class="px-2.5 py-1 rounded-lg text-[9px] font-black uppercase tracking-wider shadow-sm border ${getStatusClass(report.status)}">
+                                    ${report.status}
+                                </span>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-8 py-7 text-center">
+                        <div class="flex items-center justify-center gap-3">
+                            <button onclick="changeStatus(${report.id})" class="p-3 bg-white border border-gray-100 text-blue-500 rounded-2xl hover:bg-blue-600 hover:text-white transition-all shadow-sm group" title="Update Status">
+                                <i class="fas fa-sync-alt text-xs group-hover:rotate-180 transition-transform duration-500"></i>
+                            </button>
+                            <button onclick="deleteReport(${report.id})" class="p-3 bg-white border border-gray-100 text-red-400 rounded-2xl hover:bg-red-500 hover:text-white transition-all shadow-sm" title="Hapus">
+                                <i class="fas fa-times text-xs"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+
+            updateStats();
+        }
+
+        function getPriorityClass(p) {
+            if (p === 'Darurat') return 'bg-red-600 text-white';
+            if (p === 'Penting') return 'bg-orange-500 text-white';
+            return 'bg-blue-600 text-white';
+        }
+
+        function getStatusClass(s) {
+            if (s === 'Resolved') return 'bg-green-50 text-green-600 border-green-200';
+            if (s === 'In Progress') return 'bg-yellow-50 text-yellow-700 border-yellow-200';
+            return 'bg-gray-50 text-gray-500 border-gray-200';
+        }
+
+        function changeStatus(id) {
+            const report = reports.find(r => r.id === id);
+            if (report.status === 'Open') report.status = 'In Progress';
+            else if (report.status === 'In Progress') report.status = 'Resolved';
+            else report.status = 'Open';
+            
+            saveData();
+            showToast("STATUS PRESENTASI DIPERBARUI");
+        }
+
+        function deleteReport(id) {
+            if (confirm("Hapus data presentasi ini?")) {
+                reports = reports.filter(r => r.id !== id);
+                saveData();
+                showToast("DATA DIHAPUS");
+            }
+        }
+
+        function clearAllData() {
+            if (confirm("Hapus seluruh database presentasi 2026?")) {
+                reports = [];
+                saveData();
+                showToast("SELURUH DATABASE DIBERSIHKAN");
+            }
+        }
+
+        function updateStats() {
+            document.getElementById('totalReports').innerText = reports.length;
+            document.getElementById('pendingReports').innerText = reports.filter(r => r.status === 'In Progress').length;
+            document.getElementById('resolvedReports').innerText = reports.filter(r => r.status === 'Resolved').length;
+        }
+
+        function showToast(msg) {
+            document.getElementById('toastMsg').innerText = msg;
+            toast.classList.remove('hidden');
+            toast.classList.add('flex');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+                toast.classList.remove('flex');
+            }, 3000);
+        }
+
+        function copyTableData() {
+            if (reports.length === 0) return;
+            let text = `PRESENTASI LAPORAN IT - SUNSET POINT 2026\n`;
+            text += `ADMIN: I KADEK BUDIASTIKA\n`;
+            text += `DIBUAT PADA: ${new Date().toLocaleString()}\n`;
+            text += `==========================================\n\n`;
+            reports.forEach((r, i) => {
+                text += `${i+1}. [${r.status.toUpperCase()}] - ${r.timestamp}\n   Staf: ${r.reporter} (${r.dept})\n   Detail: ${r.issue}\n   Prioritas: ${r.priority}\n\n`;
+            });
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+            showToast("REKAP DISALIN UNTUK PRESENTASI");
+        }
+    </script>
+</body>
+</html>
